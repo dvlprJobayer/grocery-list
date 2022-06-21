@@ -4,7 +4,10 @@ export default function PageHeader(props) {
     return (
         <View style={styles.pageHeader}>
             <View style={styles.searchBar}>
-                <TextInput placeholder='Search' />
+                <TextInput
+                    onChangeText={inputText => props.setSearchText(inputText)}
+                    placeholder='Search'
+                />
             </View>
             <Pressable onPress={() => props.setModalVisible(true)} style={{ flex: 1, marginLeft: 10 }}>
                 <View style={styles.searchButtonContainer}>

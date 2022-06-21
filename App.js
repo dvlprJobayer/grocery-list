@@ -5,20 +5,32 @@ import PageHeader from './components/PageHeader';
 import PageModal from './components/PageModal';
 
 export default function App() {
+    const [searchText, setSearchText] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-    const [groceryList, setGroceryList] = useState([]);
+    const [groceryList, setGroceryList] = useState([])
+    const filteredGroceryList = groceryList.filter(listItem => (
+        listItem.name.toLowerCase().includes(searchText.toLowerCase())
+    ))
 
     return (
         <>
-            <PageHeader setModalVisible={setModalVisible} />
+            {/* Page Header */}
+            <PageHeader
+                setModalVisible={setModalVisible}
+                setSearchText={setSearchText}
+            />
+
+            {/* Grocery List */}
             <View style={styles.groceryListContainer}>
                 {
-                    groceryList.map(groceryItem => <GroceryItem
+                    filteredGroceryList.map(groceryItem => <GroceryItem
                         key={groceryItem.id}
                         groceryItem={groceryItem.name}
                     />)
                 }
             </View>
+
+            {/* Grocery Item Add Modal */}
             <PageModal
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
