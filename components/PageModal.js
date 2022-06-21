@@ -1,7 +1,15 @@
 import { View, Text, Image, Pressable, TextInput, Modal, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function PageModal(props) {
+    const [groceryItem, setGroceryItem] = useState('')
+    function addItem() {
+        if (groceryItem) {
+            props.setGroceryList(currentGroceryList => [...currentGroceryList, { name: groceryItem, id: currentGroceryList.length }])
+            setGroceryItem('')
+        }
+    }
+
     return (
         <Modal
             animationType="slide"
@@ -20,10 +28,13 @@ export default function PageModal(props) {
                         <View>
                             <Text>Grocery Name</Text>
                             <View style={styles.modalInput}>
-                                <TextInput placeholder='Add Grocery' />
+                                <TextInput
+                                    value={groceryItem}
+                                    onChangeText={inputText => setGroceryItem(inputText)} placeholder='Add Grocery'
+                                />
                             </View>
                         </View>
-                        <Pressable>
+                        <Pressable onPress={addItem}>
                             <View style={styles.modalBtn}>
                                 <Text style={{ color: 'white', fontWeight: '600' }}>Add Grocery Item</Text>
                             </View>
